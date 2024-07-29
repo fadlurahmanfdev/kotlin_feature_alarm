@@ -23,6 +23,7 @@ abstract class FeatureAlarmService : Service() {
 
     companion object {
         const val ACTION_PLAY_ALARM = "co.id.fadlurahmanfdev.kotlin_feature_alarm.ACTION_PLAY_ALARM"
+        const val ACTION_STOP_ALARM = "co.id.fadlurahmanfdev.kotlin_feature_alarm.ACTION_STOP_ALARM"
         const val PARAM_NOTIFICATION_ID = "PARAM_NOTIFICATION_ID"
 
         fun <T : FeatureAlarmService> startPlayingAlarm(
@@ -32,6 +33,18 @@ abstract class FeatureAlarmService : Service() {
         ) {
             val intent = Intent(context, clazz).apply {
                 action = ACTION_PLAY_ALARM
+                putExtra(PARAM_NOTIFICATION_ID, notificationId)
+            }
+            ContextCompat.startForegroundService(context, intent)
+        }
+
+        fun <T : FeatureAlarmService> stopPlayingAlarm(
+            context: Context,
+            notificationId: Int,
+            clazz: Class<T>
+        ) {
+            val intent = Intent(context, clazz).apply {
+                action = ACTION_STOP_ALARM
                 putExtra(PARAM_NOTIFICATION_ID, notificationId)
             }
             ContextCompat.startForegroundService(context, intent)
@@ -66,11 +79,25 @@ abstract class FeatureAlarmService : Service() {
                 }
             }
 
+            ACTION_STOP_ALARM -> {
+                stopForegroundService()
+            }
+
             else -> {
                 onReceivedAction(intent?.action, intent)
             }
         }
         return START_STICKY
+    }
+
+    private fun stopForegroundService() {
+        stopRinging()
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            stopForeground(STOP_FOREGROUND_REMOVE)
+        } else {
+            stopForeground(true)
+        }
     }
 
     open fun onReceivedAction(action: String?, intent: Intent?) {}
