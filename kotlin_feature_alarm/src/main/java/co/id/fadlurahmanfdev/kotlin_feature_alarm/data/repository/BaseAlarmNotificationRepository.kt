@@ -9,6 +9,8 @@ import android.net.Uri
 import android.os.Build
 import androidx.annotation.DrawableRes
 import androidx.core.app.NotificationCompat
+import androidx.core.graphics.drawable.IconCompat
+import co.id.fadlurahmanfdev.kotlin_feature_alarm.data.dto.FeatureAlarmNotificationAction
 
 abstract class BaseAlarmNotificationRepository {
     private lateinit var notificationManager: NotificationManager
@@ -44,18 +46,44 @@ abstract class BaseAlarmNotificationRepository {
         @DrawableRes icon: Int,
         title: String,
         text: String,
-        pendingIntent: PendingIntent,
+        fullScreenIntent: PendingIntent,
+        snoozeAction: FeatureAlarmNotificationAction,
+        dismissAction: FeatureAlarmNotificationAction,
     ): Notification {
         val notification = NotificationCompat.Builder(context, channelId).apply {
+            setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
             setContentTitle(title)
             setContentText(text)
             setAutoCancel(false)
-            setOngoing(true)
             setPriority(NotificationCompat.PRIORITY_MAX)
             setSmallIcon(icon)
-            setFullScreenIntent(pendingIntent, true)
+            setFullScreenIntent(fullScreenIntent, true)
+
+            // snooze
+            val snoozeIcon = getIconCompatFromAsset(snoozeAction)
+            addAction(
+                NotificationCompat.Action.Builder(
+                    snoozeIcon,
+                    snoozeAction.textAction,
+                    snoozeAction.action
+                ).build()
+            )
+
+            // dismiss
+            val dismissIcon = getIconCompatFromAsset(dismissAction)
+            addAction(
+                NotificationCompat.Action.Builder(
+                    dismissIcon,
+                    dismissAction.textAction,
+                    dismissAction.action
+                ).build()
+            )
         }
         return notification.build()
+    }
+
+    private fun getIconCompatFromAsset(action: FeatureAlarmNotificationAction): IconCompat {
+        return IconCompat.createWithContentUri(Uri.parse("android.resource://${action.packageName}/" + action.icon))
     }
 
 }
