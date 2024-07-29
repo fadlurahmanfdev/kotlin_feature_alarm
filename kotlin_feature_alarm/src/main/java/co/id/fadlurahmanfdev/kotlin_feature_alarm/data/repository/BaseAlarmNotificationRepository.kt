@@ -36,26 +36,26 @@ abstract class BaseAlarmNotificationRepository {
                 }
             )
         }
+    }
 
-        fun getFullScreenNotification(
-            context: Context,
-            channelId: String,
-            @DrawableRes icon: Int,
-            title: String,
-            text: String,
-            pendingIntent: PendingIntent,
-        ): Notification {
-            val notification = NotificationCompat.Builder(context, channelId).apply {
-                setContentTitle(title)
-                setContentText(text)
-                setAutoCancel(false)
-                setOngoing(true)
-                setPriority(NotificationCompat.PRIORITY_MAX)
-                setSmallIcon(icon)
-                setFullScreenIntent(pendingIntent, true)
-            }
-            return notification.build()
+    fun getFullScreenNotification(
+        context: Context,
+        channelId: String,
+        @DrawableRes icon: Int,
+        title: String,
+        text: String,
+        pendingIntent: PendingIntent,
+    ): Notification {
+        val notification = NotificationCompat.Builder(context, channelId).apply {
+            setContentTitle(title)
+            setContentText(text)
+            setAutoCancel(false)
+            setOngoing(true)
+            setPriority(NotificationCompat.PRIORITY_MAX)
+            setSmallIcon(icon)
+            setFullScreenIntent(pendingIntent, true)
         }
+        return notification.build()
     }
 
 }
