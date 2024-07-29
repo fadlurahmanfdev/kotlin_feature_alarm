@@ -37,17 +37,14 @@ abstract class BaseAlarmNotificationRepository {
             )
         }
 
-        fun showNotification(
+        fun getFullScreenNotification(
             context: Context,
-            id: Int,
             channelId: String,
             @DrawableRes icon: Int,
             title: String,
             text: String,
             pendingIntent: PendingIntent,
-        ) {
-            initNotificationManager(context)
-
+        ): Notification {
             val notification = NotificationCompat.Builder(context, channelId).apply {
                 setContentTitle(title)
                 setContentText(text)
@@ -57,12 +54,8 @@ abstract class BaseAlarmNotificationRepository {
                 setSmallIcon(icon)
                 setFullScreenIntent(pendingIntent, true)
             }
-            showNotification(id, notification.build())
+            return notification.build()
         }
-    }
-
-    fun showNotification(id: Int, notification: Notification) {
-        return notificationManager.notify(id, notification)
     }
 
 }
