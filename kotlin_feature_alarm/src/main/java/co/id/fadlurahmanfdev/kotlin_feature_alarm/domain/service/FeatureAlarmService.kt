@@ -76,14 +76,14 @@ abstract class FeatureAlarmService : Service() {
     open fun onReceivedAction(action: String?, intent: Intent?) {}
 
     open fun onStartForegroundService(notificationId: Int) {
-        startForeground(notificationId, onAlarmNotification())
+        startForeground(notificationId, onAlarmNotification(applicationContext))
     }
 
-    abstract fun onAlarmNotification(): Notification
+    abstract fun onAlarmNotification(context: Context): Notification
 
     open fun onStartPlayingAlarmPlayer() {
         stopRinging()
-        startRinging()
+        startRinging(defaultUriRingtone)
     }
 
     private fun stopRinging() {
@@ -94,9 +94,9 @@ abstract class FeatureAlarmService : Service() {
     }
 
     open var defaultUriRingtone: Uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE)
-    private fun startRinging() {
+    private fun startRinging(ringtone: Uri) {
         mediaPlayer = MediaPlayer()
-        mediaPlayer?.setDataSource(applicationContext, defaultUriRingtone)
+        mediaPlayer?.setDataSource(applicationContext, ringtone)
 
         // set volume based on ringtone volume
         mediaPlayer?.setAudioAttributes(
