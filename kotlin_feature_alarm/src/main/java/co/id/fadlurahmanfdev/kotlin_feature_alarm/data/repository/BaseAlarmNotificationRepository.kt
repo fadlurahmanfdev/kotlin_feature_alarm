@@ -24,7 +24,7 @@ abstract class BaseAlarmNotificationRepository {
         id: String,
         name: String,
         description: String,
-        sound: Uri
+        sound: Uri?
     ) {
         initNotificationManager(context)
 
