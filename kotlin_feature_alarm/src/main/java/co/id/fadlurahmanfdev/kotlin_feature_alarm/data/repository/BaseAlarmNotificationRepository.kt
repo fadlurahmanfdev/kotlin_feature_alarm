@@ -47,8 +47,7 @@ abstract class BaseAlarmNotificationRepository {
         title: String,
         text: String,
         fullScreenIntent: PendingIntent,
-        snoozeAction: FeatureAlarmNotificationAction,
-        dismissAction: FeatureAlarmNotificationAction,
+        actions: List<FeatureAlarmNotificationAction>,
     ): Notification {
         val notification = NotificationCompat.Builder(context, channelId).apply {
             setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
@@ -59,25 +58,18 @@ abstract class BaseAlarmNotificationRepository {
             setSmallIcon(icon)
             setFullScreenIntent(fullScreenIntent, true)
 
-            // snooze
-            val snoozeIcon = getIconCompatFromAsset(snoozeAction)
-            addAction(
-                NotificationCompat.Action.Builder(
-                    snoozeIcon,
-                    snoozeAction.textAction,
-                    snoozeAction.action
-                ).build()
-            )
-
-            // dismiss
-            val dismissIcon = getIconCompatFromAsset(dismissAction)
-            addAction(
-                NotificationCompat.Action.Builder(
-                    dismissIcon,
-                    dismissAction.textAction,
-                    dismissAction.action
-                ).build()
-            )
+            if (actions.isNotEmpty()) {
+                val newActions = if (actions.size > 2) actions.take(2) else actions
+                newActions.forEach { element ->
+                    addAction(
+                        NotificationCompat.Action.Builder(
+                            element.icon,
+                            element.textAction,
+                            element.action
+                        ).build()
+                    )
+                }
+            }
         }
         return notification.build()
     }

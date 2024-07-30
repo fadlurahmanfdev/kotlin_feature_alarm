@@ -40,12 +40,10 @@ abstract class FeatureAlarmService : Service() {
 
         fun <T : FeatureAlarmService> stopPlayingAlarm(
             context: Context,
-            notificationId: Int,
             clazz: Class<T>
         ) {
             val intent = Intent(context, clazz).apply {
                 action = ACTION_STOP_ALARM
-                putExtra(PARAM_NOTIFICATION_ID, notificationId)
             }
             ContextCompat.startForegroundService(context, intent)
         }
