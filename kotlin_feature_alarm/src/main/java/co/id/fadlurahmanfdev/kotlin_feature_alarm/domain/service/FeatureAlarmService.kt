@@ -10,6 +10,7 @@ import android.media.MediaPlayer
 import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Build
+import android.os.Bundle
 import android.os.IBinder
 import android.os.VibrationEffect
 import android.os.Vibrator
@@ -29,11 +30,15 @@ abstract class FeatureAlarmService : Service() {
         fun <T : FeatureAlarmService> startPlayingAlarm(
             context: Context,
             notificationId: Int,
+            bundle: Bundle? = null,
             clazz: Class<T>
         ) {
             val intent = Intent(context, clazz).apply {
                 action = ACTION_PLAY_ALARM
                 putExtra(PARAM_NOTIFICATION_ID, notificationId)
+                if (bundle != null) {
+                    putExtras(bundle)
+                }
             }
             ContextCompat.startForegroundService(context, intent)
         }
@@ -71,21 +76,25 @@ abstract class FeatureAlarmService : Service() {
         when (intent?.action) {
             ACTION_PLAY_ALARM -> {
                 val notificationId = intent.getIntExtra(PARAM_NOTIFICATION_ID, -1)
+                val bundle = intent.extras
                 if (notificationId != -1) {
-                    onStartForegroundService(notificationId)
-                    onStartPlayingAlarmPlayer()
+                    onReceiveActionPlayAlarm(notificationId, bundle)
+                    onStartForeground(notificationId, bundle)
                 }
             }
 
             ACTION_STOP_ALARM -> {
                 stopForegroundService()
             }
-
-            else -> {
-                onReceivedAction(intent?.action, intent)
-            }
         }
         return START_STICKY
+    }
+
+    open fun onReceiveActionPlayAlarm(notificationId: Int, bundle: Bundle?) {}
+
+    private fun onStartForeground(notificationId: Int, bundle: Bundle?) {
+        startForeground(notificationId, onAlarmNotification(applicationContext))
+        onStartPlayingAlarmPlayer(bundle)
     }
 
     private fun stopForegroundService() {
@@ -98,18 +107,14 @@ abstract class FeatureAlarmService : Service() {
         }
     }
 
-    open fun onReceivedAction(action: String?, intent: Intent?) {}
-
-    open fun onStartForegroundService(notificationId: Int) {
-        startForeground(notificationId, onAlarmNotification(applicationContext))
-    }
-
     abstract fun onAlarmNotification(context: Context): Notification
 
-    open fun onStartPlayingAlarmPlayer() {
+    private fun onStartPlayingAlarmPlayer(bundle: Bundle?) {
         stopRinging()
-        startRinging(defaultUriRingtone)
+        startRinging(getRingtone(bundle))
     }
+
+    open fun getRingtone(bundle: Bundle?): Uri = defaultUriRingtone
 
     private fun stopRinging() {
         mediaPlayer?.stop()
@@ -118,7 +123,7 @@ abstract class FeatureAlarmService : Service() {
         cancelVibrator()
     }
 
-    open var defaultUriRingtone: Uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE)
+    open var defaultUriRingtone: Uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)
     private fun startRinging(ringtone: Uri) {
         mediaPlayer = MediaPlayer()
         mediaPlayer?.setDataSource(applicationContext, ringtone)
@@ -139,9 +144,9 @@ abstract class FeatureAlarmService : Service() {
 
     private fun playVibrateEffect() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            vibrator.vibrate(VibrationEffect.createWaveform(longArrayOf(0L, 2000L, 2000L), 0))
+            vibrator.vibrate(VibrationEffect.createWaveform(longArrayOf(2000L, 2000L, 2000L), 0))
         } else {
-            vibrator.vibrate(longArrayOf(0L, 2000L, 2000L), 0)
+            vibrator.vibrate(longArrayOf(2000L, 2000L, 2000L), 0)
         }
     }
 
