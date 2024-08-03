@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import android.os.Bundle
 import java.util.Calendar
 import java.util.Date
 
@@ -26,10 +27,14 @@ abstract class FeatureAlarmReceiver : BroadcastReceiver() {
         fun <T : FeatureAlarmReceiver> getPendingIntentSetAlarm(
             context: Context,
             requestCode: Int,
+            bundle: Bundle?,
             clazz: Class<T>
         ): PendingIntent {
             val intent = Intent(context, clazz).apply {
                 action = ACTION_SET_ALARM
+                if (bundle != null) {
+                    putExtras(bundle)
+                }
             }
             return PendingIntent.getBroadcast(context, requestCode, intent, getFlagPendingIntent())
         }
@@ -79,7 +84,7 @@ abstract class FeatureAlarmReceiver : BroadcastReceiver() {
 
         when (intent?.action) {
             ACTION_SET_ALARM -> {
-                onReceiveActionSetAlarm(context, intent)
+                onReceiveActionSetAlarm(context, intent, intent.extras)
             }
 
             ACTION_SNOOZE_ALARM -> {
@@ -106,7 +111,7 @@ abstract class FeatureAlarmReceiver : BroadcastReceiver() {
         }
     }
 
-    abstract fun onReceiveActionSetAlarm(context: Context, intent: Intent)
+    abstract fun onReceiveActionSetAlarm(context: Context, intent: Intent, extras: Bundle?)
 
     abstract fun onReceiveActionDismissAlarm(context: Context, intent: Intent)
 
