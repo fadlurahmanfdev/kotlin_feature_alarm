@@ -93,7 +93,7 @@ abstract class FeatureAlarmService : Service() {
     open fun onReceiveActionPlayAlarm(notificationId: Int, bundle: Bundle?) {}
 
     private fun onStartForeground(notificationId: Int, bundle: Bundle?) {
-        startForeground(notificationId, onAlarmNotification(applicationContext))
+        startForeground(notificationId, onAlarmNotification(applicationContext, bundle))
         onStartPlayingAlarmPlayer(bundle)
     }
 
@@ -107,7 +107,7 @@ abstract class FeatureAlarmService : Service() {
         }
     }
 
-    abstract fun onAlarmNotification(context: Context): Notification
+    abstract fun onAlarmNotification(context: Context, bundle: Bundle?): Notification
 
     private fun onStartPlayingAlarmPlayer(bundle: Bundle?) {
         stopRinging()
