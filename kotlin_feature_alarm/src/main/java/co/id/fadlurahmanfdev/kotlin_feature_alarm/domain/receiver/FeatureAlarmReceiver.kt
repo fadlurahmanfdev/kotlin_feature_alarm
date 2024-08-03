@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import androidx.core.content.ContextCompat
 import java.util.Calendar
 import java.util.Date
 
@@ -48,6 +49,16 @@ abstract class FeatureAlarmReceiver : BroadcastReceiver() {
                 action = ACTION_DISMISS_ALARM
             }
             return PendingIntent.getBroadcast(context, requestCode, intent, getFlagPendingIntent())
+        }
+
+        fun <T : FeatureAlarmReceiver> sendBroadcastSendAlarm(
+            context: Context,
+            clazz: Class<T>
+        ) {
+            val intent = Intent(context, clazz).apply {
+                action = ACTION_DISMISS_ALARM
+            }
+            context.sendBroadcast(intent)
         }
 
         fun <T : FeatureAlarmReceiver> getPendingIntentSnoozeAlarm(
