@@ -21,4 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "Kotlin Feature Alarm"
 include(":app")
-include(":kotlin_feature_alarm")
+include(":feature_alarm")

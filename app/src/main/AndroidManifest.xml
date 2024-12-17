@@ -2,6 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.USE_EXACT_ALARM"/>
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM"/>
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"/>
+
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT"/>
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -13,7 +20,10 @@
         android:theme="@style/Theme.KotlinFeatureAlarm"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".presentation.ExampleFullScreenIntentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,6 +31,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <service android:name=".core.service.AlarmService" android:exported="false">
+            <intent-filter>
+                <action android:name="com.fadlurahmanfdev.feature_alarm.ACTION_PLAY_ALARM"/>
+                <action android:name="com.fadlurahmanfdev.feature_alarm.ACTION_STOP_ALARM"/>
+            </intent-filter>
+        </service>
+
+        <receiver android:name=".core.service.AlarmReceiver" android:exported="false">
+            <intent-filter>
+                <action android:name="com.fadlurahmanfdev.feature_alarm.ACTION_SET_ALARM"/>
+                <action android:name="com.fadlurahmanfdev.feature_alarm.ACTION_DISMISS_ALARM"/>
+                <action android:name="com.fadlurahmanfdev.feature_alarm.ACTION_SNOOZE_ALARM"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

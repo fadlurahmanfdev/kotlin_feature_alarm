@@ -5,13 +5,6 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.fadlurahmanfdev.example.presentation.MainActivity">
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/rv"
-        tools:listitem="@layout/item_feature"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+    tools:context=".presentation.ExampleFullScreenIntentActivity">
 
 </androidx.constraintlayout.widget.ConstraintLayout>

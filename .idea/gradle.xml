@@ -10,7 +10,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/kotlin_feature_alarm" />
+            <option value="$PROJECT_DIR$/feature_alarm" />
           </set>
         </option>
         <option name="resolveExternalAnnotations" value="false" />
