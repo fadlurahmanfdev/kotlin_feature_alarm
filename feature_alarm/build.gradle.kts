@@ -65,7 +65,7 @@ mavenPublishing {
     publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
     signAllPublications()
 
-    coordinates("com.fadlurahmanfdev", "feature_location", "0.1.0")
+    coordinates("com.fadlurahmanfdev", "feature_alarm", "0.0.1")
 
     pom {
         name.set("Feature Alarm")
