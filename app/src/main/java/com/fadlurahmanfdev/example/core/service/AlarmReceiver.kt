@@ -10,7 +10,7 @@ import com.fadlurahmanfdev.feature_alarm.core.service.FeatureAlarmService
 class AlarmReceiver : FeatureAlarmReceiver() {
     override fun onReceiveActionSetAlarm(context: Context, intent: Intent, extras: Bundle?) {
         Log.d(this::class.java.simpleName, "on receive action set alarm")
-        FeatureAlarmService.startPlayingAlarm(context, 0, Bundle(), AlarmService::class.java)
+        FeatureAlarmService.startPlayingAlarm(context, 1, extras, AlarmService::class.java)
     }
 
     override fun onReceiveActionDismissAlarm(context: Context, intent: Intent) {
@@ -18,7 +18,7 @@ class AlarmReceiver : FeatureAlarmReceiver() {
         FeatureAlarmService.stopPlayingAlarm(context, AlarmService::class.java)
     }
 
-    override fun onReceiveActionSnoozeAlarm(context: Context, intent: Intent) {
+    override fun onReceiveActionSnoozeAlarm(context: Context, intent: Intent, intervalInSecond: Int) {
         Log.d(this::class.java.simpleName, "on receive action snooze alarm")
     }
 }

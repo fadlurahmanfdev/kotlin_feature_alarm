@@ -51,4 +51,6 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
 
     implementation(project(":feature_alarm"))
+
+    implementation("com.ncorti:slidetoact:0.11.0")
 }

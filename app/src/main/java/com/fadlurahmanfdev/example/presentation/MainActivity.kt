@@ -66,9 +66,9 @@ class MainActivity : AppCompatActivity(), ListExampleAdapter.Callback {
     override fun onClicked(item: FeatureModel) {
         when (item.enum) {
             "INFO_NEXT_ALARM" -> {
-//                val time = Calendar.getInstance().apply {
-//                    timeInMillis =  alarmManager.nextAlarmClock.triggerTime
-//                }
+                val time = Calendar.getInstance().apply {
+                    timeInMillis =  alarmManager.nextAlarmClock.triggerTime
+                }
                 Log.d(this::class.java.simpleName, "next alarm will be trigger at ${alarmManager.nextAlarmClock.triggerTime}")
             }
 
@@ -79,7 +79,10 @@ class MainActivity : AppCompatActivity(), ListExampleAdapter.Callback {
                 val setAlarmPendingIntent = FeatureAlarmReceiver.getPendingIntentSetAlarm(
                     context = this,
                     requestCode = 0,
-                    bundle = Bundle(),
+                    bundle = Bundle().apply {
+                        putString("PARAM_TEXT", "Example Alarm")
+                        putString("PARAM_TIME", "00:05")
+                    },
                     clazz = AlarmReceiver::class.java
                 )
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

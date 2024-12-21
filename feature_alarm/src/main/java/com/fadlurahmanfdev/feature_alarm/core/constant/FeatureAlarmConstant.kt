@@ -10,10 +10,5 @@ object FeatureAlarmConstant {
         "com.fadlurahmanfdev.feature_alarm.ACTION_SNOOZE_ALARM"
     
     const val PARAM_NOTIFICATION_ID = "PARAM_NOTIFICATION_ID"
-    const val PARAM_YEAR = "PARAM_YEAR"
-    const val PARAM_MONTH = "PARAM_MONTH"
-    const val PARAM_DAY = "PARAM_DAY"
-    const val PARAM_HOUR = "PARAM_HOUR"
-    const val PARAM_MINUTE = "PARAM_MINUTE"
-    const val PARAM_SECOND = "PARAM_SECOND"
+    const val PARAM_INTERVAL_IN_SECOND = "PARAM_INTERVAL_IN_SECOND"
 }

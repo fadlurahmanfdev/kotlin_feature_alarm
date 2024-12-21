@@ -1,8 +1,6 @@
 package com.fadlurahmanfdev.example.data.repository
 
 import android.content.Context
-import com.fadlurahmanfdev.feature_alarm.data.repository.BaseAlarmNotification
+import com.fadlurahmanfdev.feature_alarm.domain.common.BaseAlarmNotification
 
-class AlarmNotificationRepositoryImpl(context:Context):BaseAlarmNotification(context) {
-
-}
+class AlarmNotificationRepositoryImpl(context:Context): BaseAlarmNotification(context) {}

@@ -1,4 +1,4 @@
-package com.fadlurahmanfdev.feature_alarm.data.repository
+package com.fadlurahmanfdev.feature_alarm.domain.common
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -33,7 +33,7 @@ abstract class BaseAlarmNotification(private val context: Context) {
             val isChannelExist = notificationManager.notificationChannels.firstOrNull { channel ->
                 channel.id == id
             } != null
-            if (isChannelExist){
+            if (isChannelExist) {
                 Log.d(this::class.java.simpleName, "notification channel with id $id already exist")
                 return
             }
@@ -63,7 +63,7 @@ abstract class BaseAlarmNotification(private val context: Context) {
             setContentText(text)
             setAutoCancel(false)
             setPriority(NotificationCompat.PRIORITY_MAX)
-            setSmallIcon(icon)
+            setSmallIcon(icon).setCategory(NotificationCompat.CATEGORY_ALARM)
             setFullScreenIntent(fullScreenIntent, true)
 
             if (actions.isNotEmpty()) {
@@ -81,7 +81,7 @@ abstract class BaseAlarmNotification(private val context: Context) {
         return builder
     }
 
-    private fun getIconCompatFromAsset(action: FeatureAlarmNotificationAction): IconCompat {
+    fun getIconCompatFromAsset(action: FeatureAlarmNotificationAction): IconCompat {
         return IconCompat.createWithContentUri(Uri.parse("android.resource://${context.packageName}/" + action.icon))
     }
 

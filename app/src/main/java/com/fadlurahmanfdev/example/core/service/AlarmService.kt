@@ -34,12 +34,16 @@ class AlarmService : FeatureAlarmService() {
     }
 
     override fun onAlarmNotification(context: Context, bundle: Bundle?): Notification {
+        val text = bundle?.getString("PARAM_TEXT")
+        val time = bundle?.getString("PARAM_TIME")
+
         val fullScreenIntent = FeatureAlarmReceiver.getFullScreenIntent(
             context,
             ExampleFullScreenIntentActivity::class.java
         ).apply {
-            putExtra("TITLE", "INI TITLE")
-            putExtra("DESC", "INI DESC")
+            if (bundle != null) {
+                putExtras(bundle)
+            }
         }
         val fullScreenPendingIntent =
             FeatureAlarmReceiver.getFullScreenPendingIntent(context, 0, fullScreenIntent)
@@ -51,8 +55,8 @@ class AlarmService : FeatureAlarmService() {
         val notificationBuilder = notificationRepository.getFullScreenNotificationBuilder(
             channelId = "ALARM",
             fullScreenIntent = fullScreenPendingIntent,
-            title = "Tes Alarm",
-            text = "Tes Alarm",
+            title = text ?: "DEFAULT TITLE",
+            text = time ?: "DEFAULT TEXT",
             icon = R.drawable.baseline_developer_mode_24,
             actions = listOf(
                 FeatureAlarmNotificationAction(
