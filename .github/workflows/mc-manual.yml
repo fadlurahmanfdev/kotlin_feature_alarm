@@ -48,4 +48,4 @@ jobs:
           echo "---------------------------||---------------------------"
           echo "---------------------------||---------------------------"
           echo "---------------------------||---------------------------"
-          ./gradlew :feature_alarm:publishMavenPublicationToMavenCentralRepository
+          ./gradlew :whispr:publishMavenPublicationToMavenCentralRepository

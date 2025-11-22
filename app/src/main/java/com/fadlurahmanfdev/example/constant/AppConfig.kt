@@ -1,0 +1,9 @@
+package com.fadlurahmanfdev.example.constant
+
+object AppConfig {
+    const val ALARM_NOTIFICATION_CHANNEL_ID = "ALARM_NOTIFICATION"
+    const val ALARM_RTC_PENDING_INTENT_REQUEST_CODE = 900
+    const val ALARM_ELAPSED_PENDING_INTENT_REQUEST_CODE = 901
+    const val ALARM_NOTIFICATION_ID_FOR_RTC = 1000
+    const val ALARM_NOTIFICATION_ID_FOR_ELAPSED = 1001
+}
