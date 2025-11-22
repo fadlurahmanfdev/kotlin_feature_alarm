@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
+
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <application>
+        <service
+            android:name="com.fadlurahmanfdev.whispr.service.BaseWhisprAlarmService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.fadlurahmanfdev.whispr.ACTION_PLAY_ALARM" />
+                <action android:name="com.fadlurahmanfdev.whispr.ACTION_STOP_ALARM" />
+            </intent-filter>
+        </service>
+
+        <receiver
+            android:name="com.fadlurahmanfdev.whispr.receiver.BaseWhisprAlarmReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.fadlurahmanfdev.whispr.ACTION_SET_ALARM" />
+                <action android:name="com.fadlurahmanfdev.whispr.ACTION_DISMISS_ALARM" />
+                <action android:name="com.fadlurahmanfdev.whispr.ACTION_SNOOZE_ALARM" />
+            </intent-filter>
+        </receiver>
+
+        <!--        <receiver android:name=".BroadcastReceiver" android:enabled="true" android:exported="true">-->
+        <!--            <intent-filter>-->
+        <!--                <action android:name="android.intent.action.BOOT_COMPLETED" />-->
+        <!--            </intent-filter>-->
+        <!--        </receiver>-->
+    </application>
+</manifest>

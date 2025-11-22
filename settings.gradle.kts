@@ -21,4 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "Kotlin Feature Alarm"
 include(":app")
-include(":feature_alarm")
+include(":whispr")
