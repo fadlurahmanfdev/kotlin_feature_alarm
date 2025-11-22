@@ -1,0 +1,8 @@
+package com.fadlurahmanfdev.whispr.constant
+
+object WhisprKey {
+    const val PARAM_NOTIFICATION_ID = "PARAM_NOTIFICATION_ID"
+    const val PARAM_NOTIFICATION_TITLE = "PARAM_NOTIFICATION_TITLE"
+    const val PARAM_NOTIFICATION_TEXT = "PARAM_NOTIFICATION_TEXT"
+    const val PARAM_INTERVAL_IN_SECOND = "PARAM_INTERVAL_IN_SECOND"
+}
