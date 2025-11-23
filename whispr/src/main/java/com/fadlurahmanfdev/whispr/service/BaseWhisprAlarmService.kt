@@ -19,9 +19,9 @@ import com.fadlurahmanfdev.whispr.constant.WhisprConfig
 import com.fadlurahmanfdev.whispr.constant.WhisprKey
 
 abstract class BaseWhisprAlarmService : Service() {
-    private var mediaPlayer: MediaPlayer? = null
-    private lateinit var audioManager: AudioManager
-    private lateinit var vibrator: Vibrator
+    var mediaPlayer: MediaPlayer? = null
+    lateinit var audioManager: AudioManager
+    lateinit var vibrator: Vibrator
 
     override fun onBind(intent: Intent?): IBinder? {
         return null

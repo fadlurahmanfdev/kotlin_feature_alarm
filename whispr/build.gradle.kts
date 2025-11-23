@@ -52,7 +52,7 @@ publishing {
         register<MavenPublication>("release") {
             groupId = "com.fadlurahmanfdev"
             artifactId = "whispr"
-            version = "0.0.1"
+            version = "0.0.2"
 
             afterEvaluate {
                 from(components["release"])
@@ -65,7 +65,7 @@ mavenPublishing {
     publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
     signAllPublications()
 
-    coordinates("com.fadlurahmanfdev", "whispr", "0.0.1")
+    coordinates("com.fadlurahmanfdev", "whispr", "0.0.2")
 
     pom {
         name.set("Whispr")

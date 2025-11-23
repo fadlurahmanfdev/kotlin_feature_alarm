@@ -81,7 +81,7 @@ abstract class BaseWhisprNotification(private val context: Context) {
             setContentText(text)
             setOngoing(true)
             setAutoCancel(false)
-            setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            setPriority(NotificationCompat.PRIORITY_MAX)
             setSmallIcon(icon).setCategory(Notification.CATEGORY_ALARM)
 
             if (fullScreenIntent != null) {
